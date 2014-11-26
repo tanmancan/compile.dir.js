@@ -37,6 +37,7 @@ var compileScript = function(argument) {
 
     var dir = argument[2];
     var files = fs.readdirSync(dir);
+    console.log(files);
 
     var fileList = '';
 
