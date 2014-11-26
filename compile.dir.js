@@ -36,10 +36,13 @@ var child_process = require('child_process');
 var compileScript = function(argument) {
 
     var dir = argument[2];
+
+    //Get list of files within the directory
     var files = fs.readdirSync(dir);
 
     var fileList = '';
 
+    //Write out list of files
     files.forEach(function(obj) {
         console.log(obj);
         fileList += dir + '/' + obj + ' ';
@@ -49,7 +52,7 @@ var compileScript = function(argument) {
     this.init = function() {
         console.log('Initializing...');
         var cmd = 'java -jar compiler.jar --js ' + fileList + ' --js_output_file ' + dir + '.min.js';
-        //Use alternate location of Java7+ if the default java command is lower then version 7
+        //Use alternate location of Java7+ if the default java command is lower then version 7 (OSX may not allow install of java7 in system)
         var cmdAlt = '/Library/Internet\\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java -jar compiler.jar --js ' + fileList + ' --js_output_file ' + dir + '.min.js';
 
         if (process.argv[3] == 'java7') {
@@ -82,12 +85,12 @@ var compileScript = function(argument) {
 
 //Check to see if correct arguments were provided
 if (process.argv[2]) {
-    //Check to see if correct method provided (get or put)
+    //Check to see if correct folder is provided
     if (fs.existsSync(process.argv[2])) {
-        //Run secure copy script
+        //Run compiler
         compileScript(process.argv);
     } else {
-        //Exit if method is incorrect
+        //Exit if folder name is incorrect
         console.log('Folder does not exists. Shutting doowwwwnnnnnn...beep');
         process.exit(1);
     }
